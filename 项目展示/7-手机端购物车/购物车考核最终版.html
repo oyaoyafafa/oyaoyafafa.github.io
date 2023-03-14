@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./购物车.css">
+</head>
+
+<body>
+    <div class="shopcart">
+        <div class="shopcart-head">
+            <div class="shopcart-head-title">购物袋</div>
+            <div class="shopcart-head-edit">编辑</div>
+            <div class="shopcart-head-pic"><img src="./shopbag_bg.png" alt=""></div>
+        </div>
+        <div class="shopcart-main">
+            <!-- <div class="shopcart-main-item">
+                <div class="shopcart-main-item-btn ">
+                    <div class="shopcart-main-item-btn-icon active"></div>
+                </div>
+                <div class="shopcart-main-item-pic"><img src="http://www.kangliuyong.com:10002/images/product_small/IMG_0392_02p.jpg" alt=""></div>
+                <div class="shopcart-main-item-msg">
+                    <span class="shopcart-main-item-name"></span>
+                    <span class="shopcart-main-item-rule"></span>
+                    <div class="shopcart-main-item-enname"></div>
+                    <div class="shopcart-main-item-price">
+                        <div class="shopcart-main-item-yen">&yen;</div>
+                        <div class="shopcart-main-item-add"></div>
+                        <div class="shopcart-main-item-count"></div>
+                        <div class="shopcart-main-item-reduce"></div>
+                    </div>
+                </div> -->
+
+        </div>
+
+    </div>
+    <div class="shopcart-foot">
+        <div class="shopcart-foot-allbtn"></div>
+        <div class="shopcart-foot-text">全选</div>
+        <div class="shopcart-foot-all">合计:</div>
+        <div class="shopcart-foot-yen"></div>
+        <div class="shopcart-foot-allprice"></div>
+        <div class="shopcart-foot-submit">提交订单</div>
+    </div>
+
+    </div>
+
+    <script src="./shopcartData.js">
+    </script>
+    <script>
+        window.onload = function() {
+            // 导入购物车数据
+            var main = document.querySelector('.shopcart-main')
+            for (var i = 0; i < shopcartData.length; i++) {
+                var item = document.createElement('div');
+                item.classList.add('shopcart-main-item');
+
+                item.innerHTML = `<div class="shopcart-main-item-btn">
+                    <div class="shopcart-main-item-btn-icon"></div>
+                </div>
+                <div class="shopcart-main-item-pic"><img src="${shopcartData[i].small_img}" alt=""></div>
+                <div class="shopcart-main-item-msg">
+                    <span class="shopcart-main-item-name">${shopcartData[i].name}</span>
+                    <span class="shopcart-main-item-rule">${shopcartData[i].rule}</span>
+                    <div class="shopcart-main-item-enname">${shopcartData[i].enname}</div>
+                    <div class="shopcart-main-item-price">
+                        <div class="shopcart-main-item-yen">&yen;${shopcartData[i].price}</div>
+                        <div class="shopcart-main-item-reduce"></div>
+                        <div class="shopcart-main-item-count">${shopcartData[i].count}</div>
+                        <div class="shopcart-main-item-add"></div>
+                    </div>`
+                main.appendChild(item)
+            }
+            sumPrice()
+            var allSelect = document.querySelector('.shopcart-foot-allbtn');
+            var select = document.querySelectorAll('.shopcart-main-item-btn-icon');
+
+            // 全选按钮事件
+            allSelect.onclick = function() {
+                    select = document.querySelectorAll('.shopcart-main-item-btn-icon');
+                    allSelect = document.querySelector('.shopcart-foot-allbtn');
+
+                    if (allSelect.getAttribute('class') != 'shopcart-foot-allbtn') {
+                        allSelect.classList.remove('active');
+                        for (let i = 0; i < select.length; i++) {
+                            select[i].classList.remove('active');
+                        }
+                    } else {
+                        allSelect.classList.add('active');
+                        for (let j = 0; j < select.length; j++) {
+                            select[j].classList.add('active');
+
+                        }
+                    }
+                    sumPrice()
+
+                }
+                // 单选按钮事件
+            allSelect = document.querySelector('.shopcart-foot-allbtn');
+            for (let n = 0; n < select.length; n++) {
+                select[n].onclick = function() {
+                    if (this.getAttribute('class') == 'shopcart-main-item-btn-icon') {
+                        this.classList.add('active');
+                    } else {
+                        this.classList.remove('active');
+                    }
+
+                    select = document.querySelectorAll('.shopcart-main-item-btn-icon');
+                    // 计算单选框选择的个数
+                    var count = 0;
+                    for (let m = 0; m < select.length; m++) {
+                        if (select[m].getAttribute('class') != 'shopcart-main-item-btn-icon') {
+                            count++;
+                        }
+                    }
+                    if (count == select.length) {
+                        allSelect.checked = true;
+                        allSelect.classList.add('active')
+                    } else {
+                        allSelect.classList.remove('active')
+
+                    }
+                    sumPrice()
+                }
+            }
+            // 修改数量
+            var countlist = document.querySelectorAll('.shopcart-main-item-count');
+
+            add = document.querySelectorAll('.shopcart-main-item-add')
+            for (let i = 0; i < add.length; i++) {
+                add[i].onclick = function() {
+                    countlist[i].textContent++;
+                    sumPrice()
+
+                }
+            }
+            reduce = document.querySelectorAll('.shopcart-main-item-reduce')
+            for (let i = 0; i < reduce.length; i++) {
+                reduce[i].onclick = function() {
+                    if (countlist[i].textContent > 0) {
+                        countlist[i].textContent--;
+                        sumPrice()
+
+                    }
+                }
+            }
+            // 选择删除
+
+            var edit = document.querySelector('.shopcart-head-edit');
+            var submit = document.querySelector('.shopcart-foot-submit');
+            edit.onclick = function() {
+                if (edit.textContent == '编辑') {
+                    edit.textContent = '完成'
+                    submit.textContent = '删除选择'
+                } else {
+                    edit.textContent = '编辑'
+                    submit.textContent = '提交订单'
+
+                }
+            }
+
+            submit.onclick = function() {
+                    if (submit.textContent == '删除选择') {
+                        var select = document.querySelectorAll('.shopcart-main-item-btn-icon');
+                        var shopcarList = document.querySelectorAll('.shopcart-main-item');
+                        for (let i = 0; i < select.length; i++) {
+                            if (select[i].getAttribute('class') != 'shopcart-main-item-btn-icon') {
+                                shopcarList[i].remove();
+                            }
+                        }
+                        sumPrice()
+
+                    }
+                }
+                // 合计价格 函数
+
+
+            function sumPrice() {
+                var select = document.querySelectorAll('.shopcart-main-item-btn-icon');
+                var priceList = document.querySelectorAll('.shopcart-main-item-yen');
+                var countlist = document.querySelectorAll('.shopcart-main-item-count');
+                var price = 0;
+                for (let i = 0; i < select.length; i++) {
+                    if (select[i].getAttribute('class') != 'shopcart-main-item-btn-icon') {
+                        price += priceList[i].textContent.slice(1) * countlist[i].textContent
+                    }
+                }
+
+                var allprice = document.querySelector('.shopcart-foot-yen');
+                allprice.innerHTML = '&yen;' + price + '.00'
+
+            }
+            // sumPrice()
+
+        }
+    </script>
+</body>
+
+</html>

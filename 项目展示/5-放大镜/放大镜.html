@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #ddd;
+        }
+        
+        .box {
+            position: relative;
+            width: 300px;
+            margin: 0 auto;
+            /* display: flex; */
+        }
+        
+        .pic {
+            width: 100%;
+            vertical-align: bottom;
+        }
+        
+        .mask {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 0, 0.35);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            display: none;
+        }
+        
+        .layer {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            z-index: 99;
+        }
+        
+        .glass {
+            background-repeat: no-repeat;
+            background-size: 600%;
+            background-position: 0px 0px;
+            position: absolute;
+            top: 0px;
+            left: 300px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="box">
+        <img class="pic" src="./105376072_p0.png"></img>
+        <div class="mask"></div>
+        <div class="layer"></div>
+        <div class="glass"></div>
+    </div>
+    <script>
+        window.onload = function() {
+            var box = document.querySelector('.box');
+
+
+            var mask = document.querySelector('.mask');
+            var maskWidth = parseFloat(getComputedStyle(mask).width)
+            var maskHeight = parseFloat(getComputedStyle(mask).height)
+
+            var layer = document.querySelector('.layer');
+            var layerWidth = parseFloat(getComputedStyle(layer).width)
+            var layerHeight = parseFloat(getComputedStyle(layer).height)
+
+            layer.onmouseover = function() {
+                mask.style.display = 'block'
+            }
+            layer.onmouseout = function() {
+                    mask.style.display = 'none'
+                }
+                // 放大镜
+            var glass = document.querySelector('.glass');
+            // 放大镜倍数 3
+            var multiple = 6;
+            glass.style.width = maskWidth * multiple + 'px';
+            glass.style.height = maskHeight * multiple + 'px';
+
+            var sizeX = layerWidth / maskWidth
+            var sizeY = layerHeight / maskHeight
+            glass.style.backgroundSize = sizeX * 100 + '% ' + sizeY * 100 + '%';
+            // 获取放大图片
+            var pic = document.querySelector('.pic');
+            glass.style.backgroundImage = 'url(' + pic.src + ')'
+            glasssizeX = layerWidth / maskWidth
+            glasssizeY = layerHeight / maskHeight
+
+
+            // mask移动
+            layer.onmousemove = function(e) {
+                var mouseX = e.offsetX;
+                var mouseY = e.offsetY;
+
+
+                if (e.offsetX <= maskWidth / 2) {
+                    mask.style.left = 0 + 'px';
+
+                } else if (e.offsetX > maskWidth / 2 && e.offsetX <= layerWidth - maskWidth / 2) {
+                    mask.style.left = e.offsetX - +maskWidth / 2 + 'px';
+
+                }
+                if (e.offsetY <= maskHeight / 2) {
+                    mask.style.top = 0 + 'px';
+
+                } else if (e.offsetY > maskHeight / 2 && e.offsetY <= layerHeight - maskHeight / 2) {
+                    mask.style.top = e.offsetY - +maskHeight / 2 + 'px';
+
+                }
+
+                if (mouseX <= maskWidth / 2) {
+                    glass.style.backgroundPositionX = '0px';
+                } else if (mouseX > maskWidth / 2 && mouseX <= layerWidth - maskWidth / 2) {
+                    glass.style.backgroundPositionX = -(multiple) * (mouseX - maskWidth / 2) + 'px'
+
+                }
+                if (mouseY <= maskHeight / 2) {
+                    glass.style.backgroundPositionY = '0px';
+                } else if (mouseY > maskHeight / 2 && mouseY <= layerHeight - maskHeight / 2) {
+
+                    glass.style.backgroundPositionY = -(multiple) * (mouseY - maskHeight / 2) + 'px'
+
+
+
+                }
+
+
+                // 测试
+
+            }
+        }
+    </script>
+</body>
+
+</html>

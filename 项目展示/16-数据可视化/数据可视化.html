@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="./数据可视化.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
+    <link rel="stylesheet" href="./font_mumy0109l5c/iconfont.css">
+</head>
+
+<body>
+    <div class="data">
+        <div class="top container">
+            <div class="row">
+                <div class="col-xs-4 title">
+                    <div class="iconfont icon-public__easyi"></div><span class="text"> XXX省XXX市公安局狱情数据明细</span></div>
+                <div class="nav col-xs-5">
+                    <div class="item active">狱情态势</div>
+                    <div class="item">押犯分析</div>
+                    <div class="item">系统跟踪</div>
+                    <div class="item">数据应用</div>
+                </div>
+                <div class="col-xs-3 other">
+                    <div class="date">
+                        <div class="hhss">15:42</div>
+                        <span class="mmdd">12月17日</span>
+                        <span class="day">星期一</span>
+                    </div>
+                    <div class="user">
+                        <span class="iconfont icon-yonghu"></span>
+                    </div>
+                    <div class="onOff">
+                        <span class="iconfont icon-kaiguan"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main container">
+            <div class="row">
+                <div class="col-xs-4 radar ">
+
+
+
+                </div>
+                <div class="col-xs-5 map">
+
+                </div>
+                <div class="col-xs-3 ">
+                    <div class="col1-pie"></div>
+                    <div class="col1-bar"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col2-bar2">
+                </div>
+                <div class="col-xs-5 pie">
+                    <div class="col2-pie1"></div>
+                    <div class="col2-pie2"></div>
+                </div>
+                <div class="col-xs-3 curve">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col3-line1">
+                </div>
+                <div class="col-xs-5 col3-line2">
+                </div>
+                <div class="col-xs-3 bar">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <!-- 雷达图 -->
+    <script>
+        var chartDom = document.querySelector('.radar');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            title: {},
+            legend: {
+                data: ['Allocated Budget', 'Actual Spending']
+            },
+            radar: {
+                // shape: 'circle',
+                indicator: [{
+                    name: '罪犯遣返次数',
+                    max: 100
+                }, {
+                    name: 'XX比例',
+                    max: 100
+                }, {
+                    name: 'Info',
+                    max: 100
+                }, {
+                    name: 'Support',
+                    max: 100
+                }, {
+                    name: 'Development',
+                    max: 100
+                }, {
+                    name: 'Marketing',
+                    max: 100
+                }, {
+                    name: 'YYY',
+                    max: 100
+                }, {
+                    name: 'wwwe',
+                    max: 100
+                }]
+            },
+            series: [{
+                name: 'Budget vs spending',
+                type: 'radar',
+                data: [{
+                    value: [82, 76, 78, 83, 66, 80, 80, 74],
+                    areaStyle: {
+                        color: '#1799b8'
+                    }
+                    // name: 'Allocated Budget'
+                }, {
+                    // value: [5000, 14000, 28000, 26000, 42000, 21000],
+                    // name: 'Actual Spending'
+                }]
+            }]
+        };
+
+        option && myChart.setOption(option);
+        $('.radar>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+    <!-- 中国地图 -->
+    <script>
+        //初始化echarts实例
+        var myChart2 = echarts.init(document.querySelector('.map'));
+
+        function randomData() {
+            return Math.round(Math.random() * 500);
+        }
+        var mydata = [{
+            name: '北京',
+            value: '100'
+        }, {
+            name: '天津',
+            value: randomData()
+        }, {
+            name: '上海',
+            value: randomData()
+        }, {
+            name: '重庆',
+            value: randomData()
+        }, {
+            name: '河北',
+            value: randomData()
+        }, {
+            name: '河南',
+            value: randomData()
+        }, {
+            name: '云南',
+            value: randomData()
+        }, {
+            name: '辽宁',
+            value: randomData()
+        }, {
+            name: '黑龙江',
+            value: randomData()
+        }, {
+            name: '湖南',
+            value: randomData()
+        }, {
+            name: '安徽',
+            value: randomData()
+        }, {
+            name: '山东',
+            value: randomData()
+        }, {
+            name: '新疆',
+            value: randomData()
+        }, {
+            name: '江苏',
+            value: randomData()
+        }, {
+            name: '浙江',
+            value: randomData()
+        }, {
+            name: '江西',
+            value: randomData()
+        }, {
+            name: '湖北',
+            value: randomData()
+        }, {
+            name: '广西',
+            value: randomData()
+        }, {
+            name: '甘肃',
+            value: randomData()
+        }, {
+            name: '山西',
+            value: randomData()
+        }, {
+            name: '内蒙古',
+            value: randomData()
+        }, {
+            name: '陕西',
+            value: randomData()
+        }, {
+            name: '吉林',
+            value: randomData()
+        }, {
+            name: '福建',
+            value: randomData()
+        }, {
+            name: '贵州',
+            value: randomData()
+        }, {
+            name: '广东',
+            value: randomData()
+        }, {
+            name: '青海',
+            value: randomData()
+        }, {
+            name: '西藏',
+            value: randomData()
+        }, {
+            name: '四川',
+            value: randomData()
+        }, {
+            name: '宁夏',
+            value: randomData()
+        }, {
+            name: '海南',
+            value: randomData()
+        }, {
+            name: '台湾',
+            value: randomData()
+        }, {
+            name: '香港',
+            value: randomData()
+        }, {
+            name: '澳门',
+            value: randomData()
+        }];
+        var optionMap = {
+            backgroundColor: '#1c2b5b',
+            title: {
+                text: '关押犯人全国分布情况',
+                subtext: '',
+                y: '5%',
+                x: 'center',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+
+            //左侧小导航图标
+            visualMap: {
+                show: true,
+                x: 'left',
+                y: 'center',
+                splitList: [{
+                    start: 500,
+                    end: 600
+                }, {
+                    start: 400,
+                    end: 500
+                }, {
+                    start: 300,
+                    end: 400
+                }, {
+                    start: 200,
+                    end: 300
+                }, {
+                    start: 100,
+                    end: 200
+                }, {
+                    start: 0,
+                    end: 100
+                }, ],
+                color: ['#5475f5', '#9feaa5', '#85daef', '#74e2ca', '#e6ac53', '#9fb5ea']
+            },
+
+            //配置属性
+            series: [{
+                name: '数据',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: true //省份名称
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                data: mydata //数据
+            }]
+        };
+        //使用制定的配置项和数据显示图表
+        myChart2.setOption(optionMap);
+    </script>
+    <!-- 普通饼图 -->
+    <script>
+        var option = {
+            title: {
+                text: '整体评估分析',
+                textStyle: {
+                    color: '#bdcde1'
+                },
+                left: 'center'
+
+            },
+            tooltip: {
+                trigger: 'item',
+                textStyle: {
+                    color: '#73c0de',
+                    fontSize: '10px'
+                }
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [{
+                name: 'Access From',
+                type: 'pie',
+                radius: '50%',
+                data: [{
+                    value: 8,
+                    name: '逃脱'
+                }, {
+                    value: 20,
+                    name: '自杀'
+                }, {
+                    value: 70,
+                    name: '暴力'
+                }],
+
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+        var mycharts = echarts.init(document.querySelector('.col1-pie'));
+        mycharts.setOption(option);
+        $('.col1-pie>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+    <!-- 柱状图 -->
+    <script>
+        var option = {
+            title: {
+                text: '报警分析',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true,
+
+            },
+            xAxis: [{
+                type: 'category',
+                data: ['A区', 'B区', 'C区', 'D区', 'E区'],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+
+            }],
+            yAxis: [{
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            }],
+            series: [{
+                name: '次数',
+                type: 'bar',
+                barWidth: '60%',
+                data: [2, 4, 1, 5, 2],
+                itemStyle: {
+                    color: '#1799b8'
+                }
+            }]
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.querySelector('.col1-bar'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        console.log();
+        $('.col1-bar>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+    <!-- 左中柱状图 -->
+    <script>
+        var option = {
+            title: {
+                text: '外出汇总统计',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                data: ['就医', '住院', '探亲', '特许', '其他'],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+
+                // xAxis.axisLine.lineStyle. color  = '#333'
+            }],
+            yAxis: [{
+                type: 'value',
+                nameTextStyle: {
+                    color: '#bdcde1'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            }],
+            series: [{
+                name: '频率',
+                type: 'bar',
+                barWidth: '60%',
+                data: [12, 6, 8, 7, 2],
+                itemStyle: {
+                    color: '#1799b8'
+                }
+            }],
+
+
+        };
+        // option.xAxis.nameTextStyle.color = '#ffffff'
+        //初始化echarts实例
+        var myChart = echarts.init(document.querySelector('.col2-bar2'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.col2-bar2>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+    <!-- 空心饼图 -->
+    <script>
+        var option = {
+            title: {
+                text: '刑事犯危安犯比例',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: 'center',
+                right: '-18%',
+                orient: 'vertical'
+            },
+            series: [{
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [{
+                    value: 1200,
+                    name: '危安犯'
+                }, {
+                    value: 200,
+                    name: '刑事犯'
+                }]
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.col2-pie1'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.col2-pie1>div').eq(0).append(`<div class="borderTopRight"></div>
+                    <div class="borderBottomLeft"></div>`)
+    </script>
+    <!-- 简洁饼图 -->
+    <script>
+        var option = {
+            title: {
+                text: '警力分布',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+
+            series: [{
+                name: 'Access From',
+                type: 'pie',
+                radius: '50%',
+                data: [{
+                    value: 10,
+                    name: 'A区'
+                }, {
+                    value: 65,
+                    name: 'B区'
+                }, {
+                    value: 65,
+                    name: 'C区'
+                }, {
+                    value: 30,
+                    name: 'D区'
+                }, ],
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                }
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.col2-pie2'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.col2-pie2>div').eq(0).append(`<div class="borderTopRight"></div>
+                    <div class="borderBottomLeft"></div>`)
+    </script>
+    <!-- 平滑折线图 -->
+    <script>
+        var option = {
+            title: {
+                text: '督查分析',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '23:59'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            series: [{
+                data: [2, 9, 5, 9, 2, 6, 8, 5, 9, 6, 4, 3, 4, 5, 4, 6, 4, 5, 8, 9, 2, 4, 4, 6],
+                type: 'line',
+                smooth: true
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.curve'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.curve>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+    <!-- 对比折线图 -->
+    <script>
+        var option = {
+            title: {
+                text: '监狱出入数量',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['出监', '入监']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            series: [{
+                name: '出监',
+                type: 'line',
+                data: [10, 9, 2, 4, 3, 3, 4, 3, 4, 3, 1, 2]
+            }, {
+                name: '入监',
+                type: 'line',
+                data: [18, 16, 15, 14, 13, 12, 11, 10, 12, 11, 10, 12]
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.col3-line1'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+
+        $('.col3-line1>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+
+    <!-- 普通折线图 -->
+    <script>
+        var option = {
+            title: {
+                text: '押犯人数趋势变化',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+            },
+            series: [{
+                data: [16, 55, 95, 120, 135, 118, 101],
+                type: 'line'
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.col3-line2'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.col3-line2>div').eq(0).append(`<div class="borderTopRight"></div>
+                    <div class="borderBottomLeft"></div>`)
+    </script>
+    <!-- 对比柱状图 -->
+    <script>
+        var option = {
+            title: {
+                text: '外来人车',
+                textStyle: {
+                    color: '#bdcde1'
+                }
+
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product', '2022', '2023', '2023'],
+                    ['1月', 2, 1],
+                    ['2月', 4, 2],
+                    ['3月', 5, 2],
+                    ['4月', 5, 3]
+                ]
+            },
+            xAxis: {
+                type: 'category',
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+
+            },
+            yAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#bdcde1'
+                    }
+                }
+
+            },
+
+            series: [{
+                type: 'bar'
+            }, {
+                type: 'bar'
+            }, ]
+        };
+        var myChart = echarts.init(document.querySelector('.bar'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        $('.bar>div').eq(0).append(`  <div class="borderTopLeft"></div>
+                    <div class="borderBottomRight"></div>`)
+    </script>
+</body>
+
+</html>

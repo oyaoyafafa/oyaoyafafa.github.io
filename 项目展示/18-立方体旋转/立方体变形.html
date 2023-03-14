@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./立方体变形.css">
+
+</head>
+
+<body>
+
+    <div class="box">
+        <!-- <div class="item">
+            <div class="front"></div>
+            <div class="back"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="top"></div>
+            <div class="bottom"></div>
+        </div> -->
+    </div>
+    <button class="test1">测试1</button>
+    <button class="test2">测试2</button>
+    <script src="../js/jquery.min.js">
+    </script>
+    <script>
+        // 立方体的个数
+        var v = 20;
+        for (var i = 0; i < v; i++) {
+            var item = $(` 
+            <div class="item">
+                <div class="front"></div>
+                <div class="back"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="top"></div>
+            <div class="bottom"></div>
+            </div>`)
+            item.css({
+                top: 100 / v * (i + 1),
+                left: 100 / v * (i + 1),
+                width: 200 - (100 / v) * i * 2,
+                height: 200 - (100 / v) * i * 2,
+                transform: `translateZ(-${ 200 - (100/v)*i*2}px) rotateY(330deg) rotateX(330deg) rotateY(0deg)`
+            })
+
+            $('.box').append(item);
+
+
+
+        }
+
+        var r = 360;
+
+        function format() {
+            var index = 0;
+
+
+            setInterval(function() {
+                var i = 19;
+                var timer = setInterval(function() {
+
+                    console.log(i, index);
+
+                    $(`.front`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg)`)
+                    $(`.back`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg) translateZ(-200px)`)
+                    $(`.left`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg) rotateY(-90deg)`)
+                    $(`.right`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg) rotateY(90deg)`)
+                    $(`.top`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg) rotateX(90deg)`)
+                    $(`.bottom`).eq(i).css(`transform`, `rotateX(${(index+1)*r}deg) rotateY(${(index+1)*r}deg) rotateZ(${(index+1)*r}deg) rotateX(-90deg)`)
+
+                    if (i > 0) {
+                        i--
+                    } else {
+                        clearInterval(timer)
+                            // console.log('清除');
+                        i = 19
+                    }
+
+                }, 50)
+                index++
+            }, 3000)
+        }
+
+        format();
+    </script>
+
+</body>
+
+</htm

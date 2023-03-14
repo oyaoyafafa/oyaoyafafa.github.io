@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">
+        <label for=""><input class="select" type="checkbox" >单选1</label><br>
+        <label for=""><input class="select" type="checkbox" >单选2</label><br>
+        <label for=""><input class="select" type="checkbox" >单选3</label><br>
+        <label for=""><input class="select" type="checkbox" >单选4</label><br>
+        <label for=""><input class="select" type="checkbox" >单选5</label><br>
+        <label for=""><input class="allSelect" type="checkbox">全选</label><br>
+    </div>
+    <script>
+        var allSelect = document.querySelector('.allSelect');
+        var select = document.querySelectorAll('.select');
+
+        // 全选按钮事件
+        allSelect.onclick = function() {
+                select = document.querySelectorAll('.select');
+                allSelect = document.querySelector('.allSelect');
+                if (allSelect.checked == true) {
+                    for (let i = 0; i < select.length; i++) {
+                        select[i].checked = true
+                    }
+                } else {
+                    for (let j = 0; j < select.length; j++) {
+                        select[j].checked = false
+                    }
+                }
+            }
+            // 单选按钮事件
+        allSelect = document.querySelector('.allSelect');
+        for (let n = 0; n < select.length; n++) {
+            select[n].onclick = function() {
+                select = document.querySelectorAll('.select');
+                // 计算单选框选择的个数
+                var count = 0;
+                for (let m = 0; m < select.length; m++) {
+                    if (select[m].checked == true) {
+                        count++;
+                    }
+                }
+                if (count == 5) {
+                    allSelect.checked = true;
+                } else {
+                    allSelect.checked = false;
+
+                }
+            }
+        }
+        //
+    </script>
+</body>
+
+</html>

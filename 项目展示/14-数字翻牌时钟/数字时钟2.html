@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./数字时钟2.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="data">
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <div class="front">
+                    <span class="front-top">1</span>
+                    <span class="front-bottom">2</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">1</span>
+                    <span class="back-bottom">1</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js">
+    </script>
+    <script>
+        $(function() {
+
+            function change(i) {
+                var temp;
+                if (i % 2 == 0) {
+                    temp = (Number($($('.front-top')[i - 1]).text()) + 11 + '').slice(1)
+                    if (temp == 0) {
+                        change(i - 1);
+                    }
+                    fan(i)
+                } else if (i % 2 != 0) {
+                    temp = Number($($('.front-top')[i - 1]).text()) + 1
+                    if (temp == 6) {
+                        temp = 0;
+                        change(i - 1);
+                    }
+                    fan(i)
+                }
+
+                function fan(i) {
+                    $($('.front')[i - 1]).css('transform', 'rotateX(90deg)');
+                    $($('.front-bottom')[i - 1]).text(temp)
+                    $($('.back-top')[i - 1]).text(temp)
+                    $($('.back-top')[i - 1]).css('z-index', '2')
+                    setTimeout(function() {
+                        $($('.front-bottom')[i - 1]).css('z-index', '2')
+                        $($('.front')[i - 1]).css('transform', 'rotateX(180deg)');
+                    }, 300)
+                    setTimeout(function() {
+                        format();
+                    }, 800)
+                }
+            }
+
+            format();
+            setInterval(function() {
+                change(6);
+            }, 1000)
+
+            function format() {
+                var date = new Date();
+                var hours1 = (date.getHours() + 100 + '').slice(1, 2);
+                var hours2 = (date.getHours() + 100 + '').slice(2);
+
+                var minutes1 = (date.getMinutes() + 100 + '').slice(1, 2);
+                var minutes2 = (date.getMinutes() + 100 + '').slice(2);
+
+                var seconds1 = (date.getSeconds() + 100 + '').slice(1, 2);
+                var seconds2 = (date.getSeconds() + 100 + '').slice(2);
+
+                var arrNow = [hours1, hours2, minutes1, minutes2, seconds1, seconds2]
+                for (var i = 0; i < $('.box').length; i++) {
+                    $($('.box')[i]).html(`
+                <div class="front">
+                    <span class="front-top">${arrNow[i]}</span>
+                    <span class="front-bottom">${arrNow[i]}</span>
+                </div>
+                <div class="back">
+                    <span class="back-top">${arrNow[i]}</span>
+                    <span class="back-bottom">${arrNow[i]}</span>
+                </div>`)
+                }
+
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>

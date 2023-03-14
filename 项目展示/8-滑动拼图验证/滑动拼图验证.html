@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 400px;
+            margin: 0 auto;
+        }
+        
+        .pic {
+            width: 100%;
+            height: 200px;
+            background-image: url(./放大镜测试图3.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            position: relative;
+        }
+        
+        .line {
+            width: 100%;
+            height: 50px;
+            background-color: #ddd;
+            position: relative;
+        }
+        
+        .block {
+            width: 50px;
+            height: 50px;
+            background-color: skyblue;
+            position: absolute;
+            left: 0px;
+        }
+        
+        .cover {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(250, 200, 0, 0.5);
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        .start {
+            width: 50px;
+            height: 50px;
+            background-image: url(./放大镜测试图3.jpg);
+            background-repeat: no-repeat;
+            background-position: 0px 0px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="pic">
+            <div class="start"></div>
+            <div class="cover"></div>
+        </div>
+        <div class="line">
+
+            <div class="block"></div>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            var box = document.querySelector('.box');
+            var pic = document.querySelector('.pic');
+            // 图片宽高
+            var picWidth = pic.offsetWidth;
+            var picHeight = pic.offsetHeight;
+            var cover = document.querySelector('.cover');
+            // 滑块、拼图块、空白块宽高一致
+            var coverWidth = cover.offsetWidth;
+            var coverHeight = cover.offsetHeight;
+
+            var start = document.querySelector('.start');
+            // 调节拼图块的尺寸
+            start.style.backgroundSize = picWidth / coverWidth * 100 + '%'
+            var block = document.querySelector('.block')
+                // 初始化
+            format(cover, start, block);
+            // 初始化函数 参1为空白快 2为拼图块 3为滑动块
+            function format(cover, start, block) {
+                // 随机空白块的定位
+                var right = Math.random() * (picWidth / 2 - coverWidth)
+                var top = Math.random() * (picHeight - coverHeight)
+                cover.style.right = right + 'px'
+                cover.style.top = top + 'px'
+
+                // 拼图块的高度与空白块一致
+                start.style.top = top + 'px'
+
+                // 随机拼图快的左距离
+                var left = Math.random() * (picWidth / 2 - start.offsetHeight)
+                start.style.left = left + 'px'
+                    // 拼图块的背景内容随空白块的位置变化
+                start.style.backgroundPositionX = -(picWidth - right - coverWidth) + 'px'
+                start.style.backgroundPositionY = -top + 'px'
+                    // 滑动块的左距离与拼图块一致
+                block.style.left = left + 'px'
+
+            }
+
+
+            var line = document.querySelector('.line')
+            block.onmousedown = function(e_block) {
+                document.onmousemove = function(e_document) {
+                    e_document.preventDefault();
+                    // 鼠标相对于页面坐标
+                    // console.log(e_document.pageX);
+                    // 滑动条相对于页面坐标
+                    // console.log(line.offsetLeft);
+                    // 
+                    if (e_document.pageX >= line.offsetLeft + coverWidth / 2 && e_document.pageX <= line.offsetLeft + picWidth - coverWidth / 2) {
+                        block.style.left = e_document.pageX - line.offsetLeft - coverWidth / 2 + 'px'
+                        start.style.left = e_document.pageX - line.offsetLeft - coverWidth / 2 + 'px'
+                    }
+
+
+
+                }
+
+
+
+            }
+            box.onmouseup = function() {
+                document.onmousemove = null;
+                // console.log(start.offsetLeft);
+                // console.log(cover.offsetLeft);
+                // 偏差值为滑块的10分之1
+                if (start.offsetLeft - cover.offsetLeft < coverWidth / 10 && cover.offsetLeft - start.offsetLeft < coverWidth / 10) {
+                    alert('匹配成功')
+                } else {
+                    // 不成功匹配则初始化
+                    format(cover, start, block);
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

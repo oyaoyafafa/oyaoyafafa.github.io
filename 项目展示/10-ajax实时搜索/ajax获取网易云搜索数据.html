@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 250px;
+            height: 30px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search {
+            width: 200px;
+            box-sizing: border-box;
+            height: 100%;
+            /* 去除input */
+            outline: none;
+            /* border: none; */
+        }
+        
+        .submit {
+            display: inline-block;
+            background-color: #ddd;
+            width: 45px;
+            height: 100%;
+            line-height: 30px;
+            text-align: center;
+            vertical-align: top;
+            cursor: pointer;
+        }
+        
+        .hint {
+            width: 100%;
+            /* height: 250px; */
+            background-color: #ddd;
+            position: absolute;
+            top: 30px;
+            display: none;
+        }
+        
+        .head {
+            width: 100%;
+            height: 30px;
+        }
+        
+        .item {
+            display: flex;
+            font-size: 14px;
+        }
+        
+        .item-title {
+            width: 60px;
+            /* text-align: center; */
+        }
+        
+        .list {
+            width: 100%;
+            /* height: 60px; */
+            background-color: skyblue;
+        }
+        
+        .list-item {
+            width: 100%;
+            display: flex;
+        }
+        
+        .list-item div {
+            height: 50px;
+            line-height: 50px;
+            width: 32%;
+        }
+        
+        .list-item div:first-child {
+            margin-left: 4%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" class="search">
+        <div class="submit">搜索</div>
+        <div class="hint">
+            <div class="head">搜"<span class="searchKey"></span>"相关用户 ></div>
+            <div class="main">
+                <div class="item Song">
+                    <!-- <div class="item-title">单曲</div>
+                    <div class="item-song">
+                        <div class="item-songname">海底-<span class="name">一只榴莲</span></div>
+                        <div class="item-songname">海阔天空-<span class="name">Beyond</span></div>
+
+                    </div> -->
+                </div>
+                <div class="item Singer">
+                    <!-- <div class="item-title">歌手</div>
+                    <div class="item-singer">
+                        <div class="item-singername"></div>
+
+
+                    </div> -->
+                </div>
+                <div class="item Albums">
+                    <!-- <div class="item-title">专辑</div>
+                    <div class="item-albums">
+                        <div class="albums">海底-<span class="name">一只榴莲</span></div>
+
+                    </div> -->
+                </div>
+                <div class="item Playlists">
+                    <!-- <div class="item-title">歌单</div>
+                    <div class="item-playlists">
+                        <div class="playlists"></div>
+
+                    </div> -->
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class=""></div>
+    <div class="list">
+        <!-- <div class="list-item">
+            <div class="list-item-song">1</div>
+            <div class="list-item-person">2</div>
+            <div class="list-item-album">3</div>
+        </div> -->
+    </div>
+
+    <script src="./jquery-3.6.0.js"></script>
+    <script>
+        var http = {
+            get: function(url, success) {
+                var ajax = new XMLHttpRequest();
+                ajax.onreadystatechange = function() {
+                    // console.log('this.readyState == ', this.readyState);
+                    if (this.readyState === 4 && this.status === 200) {
+                        success(this.responseText);
+                    }
+
+                }
+                ajax.open('get', url, true)
+                ajax.send();
+            }
+        }
+
+        $(function() {
+
+            var timer = null
+
+            $('.search').on({
+                input: function() {
+                    var val = this.value;
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout(function() {
+                        http.get('https://apis.netstart.cn/music/search/suggest?keywords=' + val, function(data) {
+                            console.log(JSON.parse(data));
+                            if (JSON.parse(data).code == 200) {
+                                var result = JSON.parse(data).result;
+
+                                $('.searchKey').text(val);
+
+                                // 单曲
+
+                                if (result.order.indexOf('songs') != -1) {
+                                    var songs = JSON.parse(data).result.songs;
+                                }
+
+                                $('.Song').html('');
+                                if (songs) {
+                                    var title = $('<div class="item-title">单曲</div>');
+                                    $('.Song').append(title);
+                                    var item_song = $('<div class="item-song"> </div> ')
+                                    $('.Song').append(item_song);
+
+                                    for (var i = 0; i < songs.length; i++) {
+                                        var song = $(`<div class="item-songname">${songs[i].name}-<span class="name">${songs[i].artists[0].name}</span></div>`)
+                                        $('.item-song').append(song);
+                                    }
+
+                                }
+
+
+                                // // 歌手
+                                if (result.order.indexOf('artists') != -1) {
+                                    var artists = JSON.parse(data).result.artists;
+
+
+                                }
+                                $('.Singer').html('');
+                                if (artists) {
+                                    var title = $('<div class="item-title">歌手</div>');
+                                    $('.Singer').append(title);
+                                    var item_singer = $('<div class="item-singer"> </div> ')
+                                    $('.Singer').append(item_singer);
+
+                                    for (var i = 0; i < artists.length; i++) {
+                                        var artist = $(` <div class="item-singername">${artists[i].name}</div> `)
+                                        $('.item-singer').append(artist);
+
+                                    }
+                                }
+
+                                // 专辑
+                                if (result.order.indexOf('albums') != -1) {
+                                    var albums = JSON.parse(data).result.albums;
+
+
+                                }
+                                $('.Albums').html('');
+                                if (albums) {
+                                    var title = $('<div class="item-title">专辑</div>');
+                                    $('.Albums').append(title);
+                                    var item_albums = $('<div class="item-albums"> </div> ')
+                                    $('.Albums').append(item_albums);
+
+                                    for (var i = 0; i < albums.length; i++) {
+                                        var albunm = $(` <div class="albums">${albums[i].name}-<span class="name">${albums[i].artist.name}</span></div> `)
+                                        $('.item-albums').append(albunm);
+
+                                    }
+
+                                }
+                                // 歌单 
+                                if (result.order.indexOf('playlists') != -1) {
+                                    var playlists = JSON.parse(data).result.playlists;
+
+
+                                }
+                                $('.Playlists').html('');
+                                if (playlists) {
+                                    var title = $('<div class="item-title">歌单</div>');
+                                    $('.Playlists').append(title);
+                                    var item_playlists = $('<div class="item-playlists"> </div> ')
+                                    $('.Playlists').append(item_playlists);
+
+                                    for (var i = 0; i < playlists.length; i++) {
+                                        var playlist = $(`<div class="playlists">${playlists[i].name}</div>`)
+                                        $('.item-playlists').append(playlist);
+
+                                    }
+                                }
+
+                            }
+
+                        })
+
+                    }, 500)
+
+                }
+            })
+
+            $('.search').on({
+                focus: function() {
+                    $('.hint').css('display', 'block')
+
+                }
+            })
+
+            $('.search').on({
+                blur: function() {
+                    $('.hint').css('display', 'none')
+
+                }
+            })
+
+
+            //         <div class="list">
+            //     <!-- <div class="list-item">
+            //         <div class="list-item-song">1</div>
+            //         <div class="list-item-person">2</div>
+            //         <div class="list-item-album">3</div>
+            //     </div> -->
+            // </div>
+            $('.submit').on({
+                click: function() {
+                    $('.list').html('');
+                    http.get('https://apis.netstart.cn/music/search/suggest?keywords=' + $('.search').val(), function(data) {
+                        var result = JSON.parse(data).result
+
+
+                        for (var i = 0; i < result.songs.length; i++) {
+                            var item = $(`<div class="list-item">
+                             <div class="list-item-song">${result.songs[i].name}</div>
+                             <div class="list-item-person">${result.songs[i].artists[0].name}</div>
+                            <div class="list-item-album">《${result.songs[i].album.name}》</div>
+                        </div>`)
+                            $('.list').append(item)
+                        }
+
+
+
+
+
+                    })
+
+                }
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

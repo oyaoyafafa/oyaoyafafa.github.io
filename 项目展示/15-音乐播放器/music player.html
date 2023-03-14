@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./music player.css">
+    <link rel="stylesheet" href="./font_7u4tzazq1ad/iconfont.css">
+    <!-- https://angstyteenwatchingtoomuchtv.files.wordpress.com/2015/07/tumblr_nlhsir3adc1sk2qobo1_12801.gif -->
+</head>
+
+<body>
+    <div class="box">
+        <div class="head">
+            <div class="nav iconfont icon-qitacaidan"></div>
+            <div class="search iconfont icon-sousuoxiao"></div>
+        </div>
+        <div class="main">
+            <img src="https://angstyteenwatchingtoomuchtv.files.wordpress.com/2015/07/tumblr_nlhsir3adc1sk2qobo1_12801.gif">
+        </div>
+        <div class="cover">
+            <div class="musicList">
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">歌名</div>
+                    <div class="duration">总时间</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">2222222</div>
+                    <div class="duration">333333</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">2222222</div>
+                    <div class="duration">333333</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">2222222</div>
+                    <div class="duration">333333</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">2222222</div>
+                    <div class="duration">333333</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+                <div class="row">
+                    <div class="order">1</div>
+                    <div class="name">2222222</div>
+                    <div class="duration">333333</div>
+                    <div class="like iconfont icon-shoucang"></div>
+                </div>
+            </div>
+        </div>
+        <div class="msg">
+            <h3>STRESSED OUT</h3>
+            <p>twenty one pilots - Blurryface</p>
+        </div>
+        <div class="bottom">
+
+            <div class="button">
+                <div class="button1 iconfont icon-a-27Dkuaitui"></div>
+                <div class="button2 iconfont icon-kaishi1"></div>
+                <div class="button3 iconfont icon-a-27Ekuaijin"></div>
+            </div>
+            <div class="time">
+                <div class="now">00:00</div>
+                <div class="total">00:00</div>
+            </div>
+            <audio src="./醉美谋女郎 - 筷子兄弟《老男孩》.mp3"></audio>
+            <input class="line" type="range" min="0" max="100" value="0">
+            <div class="iconList">
+                <div class="iconfont icon-shoucang"></div>
+                <div class="iconfont icon-suijibofang"></div>
+                <div class="iconfont icon-shuaxin"></div>
+                <div class="iconfont icon-qita"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery.min.js">
+    </script>
+    <script>
+        $(function() {
+            var arrclass = [
+                [
+                    '.main',
+                    'transform',
+                    'scale(0.25)'
+                ],
+                [
+                    '.msg',
+                    'transform',
+                    'translate(50px,-300px)'
+                ],
+                [
+                    '.msg',
+                    'color',
+                    '#000'
+                ],
+                [
+                    '.head', 'background-color', '#656565'
+                ],
+                [
+                    '.iconList',
+                    'transform',
+                    'translateY(100px)'
+                ],
+                [
+                    '.button1', 'transform', 'translate(50px,130px)'
+                ],
+                [
+                    '.button2', 'transform', 'translateY(130px)'
+                ],
+                [
+                    '.button3', 'transform', 'translate(-50px,130px)'
+
+                ],
+                [
+                    '.cover',
+                    'transform',
+                    'scale(1)'
+                ],
+            ]
+            var temp = []
+            for (var i = 0; i < arrclass.length; i++) {
+                temp.push(arrclass[i][0]);
+            }
+
+            function toggleClass(arrayclass) {
+                for (var i = 0; i < arrayclass.length; i++) {
+                    // 保存原值
+                    temp[i] = window.getComputedStyle(document.querySelector(arrayclass[i][0]), null)[arrayclass[i][1]]
+                        // 替换
+                    $(arrayclass[i][0]).css(arrayclass[i][1], arrayclass[i][2])
+                    arrayclass[i][2] = temp[i]
+
+                }
+
+
+                // arrayclass[0] = node.css(className);
+                // node.css(className, classVal);
+            }
+            $('.nav').click(function() {
+                toggleClass(arrclass)
+                    // $('.main').css('transform', 'scale(0.25)');
+                    // $('.msg').css({
+                    //     'transform': 'translate(50px,-300px)',
+                    //     'color': '#000'
+                    // });
+                    // $('.head').css('background-color', '#656565');
+                    // $('.iconList').css({
+                    //     'transform': 'translateY(100px)',
+                    // });
+                    // $('.button1').css('transform', 'translate(50px,130px)');
+                    // $('.button2').css('transform', 'translateY(130px)');
+                    // $('.button3').css('transform', 'translate(-50px,130px)');
+                    // $('.button').css({
+
+                // });
+                // $('.cover').css({
+                //     'transform': 'scale(1)',
+                // })
+            })
+            console.log();
+
+            function toggleActive(jqnode) {
+                if (jqnode.hasClass('active')) {
+                    jqnode.removeClass('active');
+                } else {
+                    jqnode.addClass('active')
+                }
+            }
+            $('.head .iconfont').click(function() {
+                toggleActive($(this))
+            })
+            $('.button2').click(function() {
+
+                if ($(this).hasClass('icon-24gf-pause2')) {
+                    $(this).removeClass('icon-24gf-pause2')
+                    $(this).addClass('icon-kaishi1')
+                    audio.pause()
+
+                } else {
+                    $(this).removeClass('icon-kaishi1')
+                    $(this).addClass('icon-24gf-pause2')
+                    audio.play()
+                }
+            })
+            $('.button1').click(function() {
+                console.log('btn1');
+                if (audio.currentTime >= 10) {
+                    audio.currentTime -= 10;
+
+                } else {
+                    audio.currentTime = 0;
+                }
+
+            })
+            $('.button3').click(function() {
+                if (audio.currentTime < input.max - 10) {
+                    audio.currentTime += 10;
+
+                } else {
+                    audio.currentTime = input.max;
+                }
+
+            })
+            $('.iconList .iconfont').click(function() {
+                toggleActive($(this))
+            })
+            $('.cover .iconfont').click(function() {
+                toggleActive($(this))
+            })
+            var audio = $('audio')[0];
+            var input = $('input')[0];
+            var hh = 0;
+            var ss = 0;
+            var nowHH = 0;
+            var nowss = 0;
+
+            audio.ondurationchange = function() {
+                input.max = this.duration;
+                console.log('进度条加载完毕');
+                hh = (parseInt(this.duration / 60) + 100 + '').slice(1)
+                ss = (parseInt(this.duration % 60) + 100 + '').slice(1)
+                console.log(hh, ss);
+                $('.total').text(hh + ':' + ss)
+            }
+            audio.ontimeupdate = function() {
+                input.value = this.currentTime;
+                nowHH = (parseInt(this.currentTime / 60) + 100 + '').slice(1)
+                nowss = (parseInt(this.currentTime % 60) + 100 + '').slice(1)
+                $('.now').text(nowHH + ':' + nowss)
+                console.log(this.currentTime);
+
+            }
+            input.onchange = function() {
+                audio.currentTime = this.value
+            }
+        })
+    </script>
+</body>
+
+</html>

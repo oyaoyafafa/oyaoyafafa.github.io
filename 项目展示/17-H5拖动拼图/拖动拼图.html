@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./拖动拼图.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <!-- <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div> -->
+        </div>
+    </div>
+    <button class="start">游戏开始</button>
+    <script src="../js/jquery.min.js"></script>
+    <script>
+        $(function() {
+            // 初始化九宫格 3 * 3 
+            var level = 3;
+            // 初始
+            var orgin = [];
+            var current = [];
+            for (var i = 0; i < level; i++) {
+                for (var j = 0; j < level; j++) {
+                    var item = $('<div class="item"></div>');
+                    item.css({
+                        'background-position': `${-j*400}px ${-i*400}px`,
+                        top: i * 100 + 'px',
+                        left: j * 100 + 'px'
+                    });
+                    item.attr('draggale', true);
+                    item.attr('id', i * 3 + j + 1);
+                    item[0].ondragstart = function(event) {
+                        event.dataTransfer.setData('text', event.target.getAttribute('id'))
+                    }
+                    item[0].ondragover = function(event) {
+                        event.preventDefault();
+                        // console.log('越过', event.target);
+                    }
+                    item[0].ondrop = function(event) {
+                        var startnode = $('#' + event.dataTransfer.getData('text'))
+                        var endnode = $(event.target)
+
+                        swapnode(startnode, endnode)
+
+
+                    }
+                    $('.box').append(item);
+                    orgin.push(i * 3 + j + 1);
+                    current.push(i * 3 + j + 1);
+                }
+            }
+
+
+            // console.log(orgin);
+            // 打乱
+            // $('.box').html('');
+            function format() {
+                current.sort(function() {
+                    return Math.random() - 0.5;
+                })
+                console.log(current);
+
+                for (var i = 0; i < $('.item').length; i++) {
+
+                    $($('.item')[i]).css(
+                        'background-position', `${(current[i] - 1) % 3 *-400}px ${Math.floor(((current[i] - 1) / 3))*-400}px`
+                    )
+                }
+            }
+            $('.start').click(function() {
+                format();
+            })
+
+            function swapnode(start, end) {
+                var sttop = start.css('top')
+                var stleft = start.css('left')
+                var etop = end.css('top')
+                var eleft = end.css('left')
+                var startId = start.attr('id');
+                var endId = end.attr('id')
+
+
+                start.css({
+                    top: etop,
+                    left: eleft
+                })
+                end.css({
+                    top: sttop,
+                    left: stleft
+                })
+
+
+
+                // 交换
+                var startIndex = current.indexOf(Number(startId));
+                var endIndex = current.indexOf(Number(endId))
+                var temp = current[startIndex];
+                current[startIndex] = current[endIndex];
+                current[endIndex] = temp;
+                console.log(JSON.stringify(current));
+                console.log(JSON.stringify(orgin));
+                if (JSON.stringify(current) == JSON.stringify(orgin)) {
+                    setTimeout(function() {
+                        alert('恭喜！你通关了！')
+                    }, 1500)
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

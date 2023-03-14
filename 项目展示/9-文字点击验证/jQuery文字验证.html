@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #777;
+        }
+        
+        .box {
+            width: 400px;
+            height: 200px;
+            background-image: url(../image/ihover-1.jpg);
+            background-size: 100%;
+            background-color: #ddd;
+            margin: 0 auto;
+            margin-top: 100px;
+            position: relative;
+        }
+        
+        .box-item {
+            width: 21px;
+            height: 21px;
+            text-align: center;
+            line-height: 21px;
+            box-sizing: border-box;
+            border: 1px solid #777;
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .cover {
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 15px;
+            color: white;
+            box-sizing: border-box;
+            border: 2px solid greenyellow;
+            font-weight: bold;
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            pointer-events: none;
+        }
+        
+        .hint {
+            width: 400px;
+            height: 50px;
+            background-color: lightcoral;
+            line-height: 50px;
+            text-align: center;
+            font-size: 22px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="box">
+        <div class="box-item"></div>
+        <div class="box-item"></div>
+        <div class="box-item"></div>
+        <div class="box-item"></div>
+
+
+        <div class="cover">1</div>
+        <div class="cover">2</div>
+        <div class="cover">3</div>
+        <div class="cover">4</div>
+    </div>
+    <div class="hint"></div>
+    <script src="./jquery-3.6.0.js"></script>
+    <script>
+        $(function() {
+            var textData = [{
+                text: '名列前茅'
+            }, {
+                text: '料事如神'
+            }, {
+                text: '博古通今'
+            }, {
+                text: '出类拔萃'
+            }, {
+                text: '誉满天下'
+            }, {
+                text: '博大精深'
+            }, {
+                text: '宽容大度'
+            }, {
+                text: '学贯中西'
+            }];
+            // console.log(textData.length);
+            var $box = $('.box');
+            var boxWidth = $box.width();
+            var boxHeight = $box.height();
+            var $item = $('.box-item');
+            var itemHeight = $($item[0]).outerHeight();
+            var itemWidth = $($item[0]).outerWidth();
+
+            var $cover = $('.cover');
+
+
+
+            // 随机成语
+            var randomText = textData[Math.floor(Math.random() * textData.length)].text;
+            $('.hint').text('请按先后顺序点击:' + randomText)
+
+            console.log(randomText);
+            // 
+            var array = []
+            for (let i = 0; i < randomText.length; i++) {
+                $item[i].textContent = randomText[i];
+                // 随机item位置
+                var itemPositonX = createInt(0, boxWidth - itemWidth);
+                var itemPositonY = createInt(0, boxHeight - itemHeight);
+                var itemPositon = {
+                    left: itemPositonX,
+                    top: itemPositonY
+                }
+
+                if (i == 0) {
+                    $($item[i]).css('left', itemPositonX);
+                    $($item[i]).css('top', itemPositonY);
+                    array.push(itemPositon);
+                } else {
+                    var count = 0;
+                    for (let j = 0; j < array.length; j++) {
+                        if (Math.abs(array[j].left - itemPositonX) > itemWidth || Math.abs(array[j].top - itemPositonY) > itemHeight) {
+                            count++;
+                        }
+                        if (count == array.length) {
+                            $($item[i]).css('left', itemPositonX);
+                            $($item[i]).css('top', itemPositonY);
+                            array.push(itemPositon);
+                            break;
+                        }
+                        if (count != array.length && j == array.length - 1) {
+                            i--;
+                        }
+                    }
+                }
+            }
+
+            // console.log($cover[2]);
+            console.log(boxWidth - itemWidth);
+
+            var index = 0;
+            var coverArray = [];
+            $box.on({
+                click: function(e) {
+                    var coverPositionX = e.offsetX
+                    var coverPositionY = e.offsetY
+
+                    coverPositionX = (e.offsetX <= itemWidth) ? itemWidth / 2 : (e.offsetX >= boxWidth - itemWidth) ? boxWidth - itemWidth / 2 : e.offsetX;
+                    coverPositionY = (e.offsetY <= itemHeight) ? itemHeight / 2 : (e.offsetY >= boxHeight - itemHeight) ? boxHeight - itemHeight / 2 : e.offsetY;
+
+                    if (index < 4) {
+                        console.log(index);
+                        coverArray.push({
+                            left: e.offsetX,
+                            top: e.offsetY
+                        })
+
+                        $($cover[index]).css({
+                            display: 'block',
+                            left: coverPositionX - itemWidth / 2,
+                            top: coverPositionY - itemHeight / 2
+                        });
+                        index++;
+
+
+                    }
+                    if (index == 4) {
+                        var count = 0;
+
+                        for (var i = 0; i < index; i++) {
+                            if (array[i].left <= coverArray[i].left && coverArray[i].left <= array[i].left + itemWidth) {
+                                if (array[i].top <= coverArray[i].top && coverArray[i].top <= array[i].top + itemHeight) {
+                                    count++;
+                                }
+                            }
+                        }
+                        if (count == 4) {
+                            $('.hint').css('background-color', 'green')
+                            $('.hint').text('验证成功')
+                        } else {
+                            $('.hint').css('background-color', 'red')
+                            $('.hint').text('验证失败')
+                        }
+
+                    }
+
+                }
+            })
+
+            // 函数：随机生成一个整数
+            function createInt(startNumber, endNumber) {
+                return ((Math.floor(Math.random() * (endNumber - startNumber + 1))) + startNumber);
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>

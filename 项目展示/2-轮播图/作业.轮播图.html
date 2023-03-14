@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .box {
+            width: 590px;
+            height: 470px;
+            overflow: hidden;
+            /* border: 2px solid #000; */
+            position: relative;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        
+        .box-banner-item {
+            width: 590px;
+            height: 470px;
+            vertical-align: bottom;
+        }
+        
+        .box-banner {
+            width: 5310px;
+            height: 470px;
+            display: flex;
+            flex-flow: row nowrap;
+            margin-left: -590px;
+        }
+        
+        .box-banner-icon {
+            width: 24px;
+            position: absolute;
+            top: 50%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .box-banner-icon-left {
+            border-radius: 0 12px 12px 0;
+            left: 0px
+        }
+        
+        .box-banner-icon-right {
+            left: 566px;
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .banner-index {
+            width: 160px;
+            height: 20px;
+            position: absolute;
+            bottom: 10px;
+            left: 30px;
+            display: flex;
+            flex-flow: row nowrap;
+        }
+        
+        .banner-index-item {
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            margin-left: 5px;
+            background-color: white;
+        }
+        
+        .active {
+            box-shadow: 0 0 1px 4px rgba(54, 54, 54, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="box-banner">
+            <img class="box-banner-icon-left box-banner-icon" src="./轮播左翻滚.png"></img>
+            <img class="box-banner-icon-right box-banner-icon" src="./轮播右翻滚.png"></img>
+            <img class="box-banner-item" src="https://imgcps.jd.com/ling4/100009077475/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5f3a47329785549f6bc7a6e1/781f535b/cr/s/q.jpg" alt="">
+            <img class="box-banner-item " src="https://img13.360buyimg.com/babel/s590x470_jfs/t1/211252/33/25059/124096/62ecd27eE663b6441/c6efaef5ac8c596c.jpg.webp" alt="">
+            <img class="box-banner-item" src="https://imgcps.jd.com/img-cubic/creative_server_cia/v2/2000366/100019483903/FocusFullshop/CkJqZnMvdDEvMTk2OTg2LzcvMjY2OTMvMjcxMzgvNjJlZDZkOThFMTkzZGUyYmIvNGU1MWIwOGFiNWJmNTEyOC5wbmcSCTItdHlfMF81MzACOO6LekITCg_mg6Dmma7lj7DlvI_mnLoQAUIRCg3np5LmnYDku7c4Njk5EAJCEAoM56uL5Y2z5oqi6LStEAZCCgoG5Yqb6I2QEAdY_-mAzfQC/cr/s/q.jpg"
+                alt="">
+            <img class="box-banner-item" src="https://img30.360buyimg.com/pop/s590x470_jfs/t1/40462/1/17971/83897/62eb61baEb4355763/3d54d8e3548540ea.jpg.webp" alt="">
+            <img class="box-banner-item" src="https://imgcps.jd.com/ling4/100019386660/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5f3a47329785549f6bc7a6f5/fe7166ee/cr/s/q.jpg" alt="">
+            <img class="box-banner-item" src="https://img11.360buyimg.com/pop/s590x470_jfs/t1/200441/10/19926/46308/61b8426dE432d6f3c/db3ba8e74d8dddf9.jpg.webp" alt="">
+            <img class="box-banner-item" src="https://img30.360buyimg.com/pop/s590x470_jfs/t1/201288/25/23710/64955/62f070fdE95cb4f47/22b916d938a43bb5.jpg.webp" alt="">
+            <img class="box-banner-item" src="https://img13.360buyimg.com/pop/s590x470_jfs/t1/69539/35/21070/78931/62e10a56E3b7134ab/d7f0cfe9c1431348.jpg.webp" alt="">
+            <img class="box-banner-item" src="https://imgcps.jd.com/ling4/100009077475/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5f3a47329785549f6bc7a6e1/781f535b/cr/s/q.jpg" alt="">
+            <img class="box-banner-item " src="https://img13.360buyimg.com/babel/s590x470_jfs/t1/211252/33/25059/124096/62ecd27eE663b6441/c6efaef5ac8c596c.jpg.webp" alt="">
+            <div class="banner-index">
+                <div class="banner-index-item active"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+                <div class="banner-index-item"></div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <button class="btn">停止</button> -->
+    <script>
+        var left_icon = document.querySelector('.box-banner-icon-left');
+        var right_icon = document.querySelector('.box-banner-icon-right');
+        var lr = document.querySelector('.box-banner')
+        var activeindex = document.querySelector('.banner-index-item.active');
+        var index = 0
+
+        // 定义变换图片函数
+        // 每次切换图片所需时间
+        var alltime = 500
+            // 用于截停切换图片的额外参数
+        var temp = 0;
+        // 每次切换图片所需移动步长
+        var step = 0;
+        // 实时轮播进度
+        var target = 0;
+        // 图片切换时使用的定时器ID
+        var setIntervalID = null;
+
+        function change() {
+            setIntervalID = setInterval(function() {
+
+                temp += alltime / 20
+                target = target + (step) / 20
+                lr.style.marginLeft = (target + 1) * (-590) + 'px';
+                if (temp === alltime) {
+                    clearInterval(setIntervalID);
+                    temp = 0
+                    console.log('index == ', index);
+                    if (index === 0) {
+                        target = 0;
+                        lr.style.marginLeft = (target + 1) * (-590) + 'px';
+                    }
+                    if (index === 7) {
+                        target = 7;
+                        lr.style.marginLeft = (target + 1) * (-590) + 'px';
+                    }
+                }
+            }, alltime / 20)
+
+        }
+
+        // 小图标点击
+        var indexIcon = document.querySelectorAll(".banner-index-item");
+        for (let i = 0; i < indexIcon.length; i++) {
+
+            indexIcon[i].onmouseenter = function() {
+                if (setIntervalID) {
+                    clearInterval(setIntervalID);
+                    temp = 0
+                    console.log('target == ', target);
+                }
+                activeindex = document.querySelector('.banner-index-item.active');
+                if (this != activeindex) {
+                    activeindex.classList.remove('active');
+                    this.classList.add('active');
+                }
+                index = i;
+                step = i - target
+                change()
+
+            }
+
+        }
+
+
+
+        // 左右点击
+        left_icon.onclick = function() {
+            if (setIntervalID) {
+                clearInterval(setIntervalID);
+                temp = 0
+                console.log('index == ', index);
+            }
+            activeindex = document.querySelector('.banner-index-item.active');
+            if (index === 0) {
+                index = 7;
+                step = -target - 1;
+                change()
+            } else {
+                step = index - target - 1;
+                index--;
+                change()
+            }
+
+
+
+            // if (index == 0) {
+            //     index = 7;
+            //     step = index - target;
+            //     change()
+            // } else {
+            //     step = index - target - 1
+            //     index--;
+            //     change()
+            // }
+
+            activeindex.classList.remove('active');
+            indexIcon[index].classList.add('active');
+
+        }
+
+        right_icon.onclick = function() {
+            nomal()
+        }
+
+        // 自动轮播
+        var normalInterval = null;
+        lr.onmouseenter = function() {
+            console.log('自动轮播停止');
+            if (normalInterval) {
+                clearInterval(normalInterval)
+            }
+        }
+        lr.onmouseleave = function() {
+            console.log('自动轮播开始');
+            normalInterval = setInterval(function() {
+
+                nomal()
+            }, 2000)
+        }
+        normalInterval = setInterval(function() {
+            nomal()
+        }, 2000)
+
+
+        // 正常轮播函数
+        function nomal() {
+            if (setIntervalID) {
+                clearInterval(setIntervalID);
+                temp = 0
+            }
+            activeindex = document.querySelector('.banner-index-item.active');
+            step = index - target + 1;
+            if (index !== 7) {
+                index++;
+                change()
+            } else {
+                index = 0;
+                change();
+
+            }
+
+
+
+            activeindex.classList.remove('active');
+            indexIcon[index].classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

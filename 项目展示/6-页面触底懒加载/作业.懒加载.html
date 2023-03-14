@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 1170px;
+            margin: 0 auto;
+            background-color: #f4f4f4;
+        }
+        
+        .box-inside {
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+        }
+        
+        .box-item {
+            width: 570px;
+            height: 370px;
+            margin-right: 30px;
+            background-color: #ddd;
+        }
+        
+        .box-item:nth-of-type(2n) {
+            margin-right: 0;
+        }
+        
+        .box-item-pic {
+            width: 570px;
+            vertical-align: bottom;
+            background-color: #444;
+        }
+        
+        span {
+            width: 570px;
+            height: 97px;
+            line-height: 97px;
+        }
+        
+        .box-item-price {
+            font-size: 26px;
+            font-weight: bold;
+            color: #f03867;
+            margin-right: 10px;
+        }
+        
+        .box-item-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="box-inside">
+            <!-- <div class="box-item">
+                <img class="box-item-pic" src="http://c.vpimg1.com/upcb/2019/03/19/57/ias_155297740486444_570x273_90.jpg" alt="">
+                <span class="box-item-price">1</span>
+                <span class="box-item-text">1</span>
+
+            </div>
+            <div class="box-item">
+                <div class="box-item-pic"><img src="" alt=""></div>
+                <span class="box-item-price"></span>
+                <span class="box-item-text"></span>
+
+            </div> -->
+        </div>
+    </div>
+    <script>
+        // 商品数据
+        window.onload = function() {
+            var allProducts = [{
+                    name: "美国LA MER海蓝之谜奢华护肤专场",
+                    price: 1988,
+                    url: "http://c.vpimg1.com/upcb/2019/03/19/57/ias_155297740486444_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 877
+                },
+
+                {
+                    name: "水之蔻Water come护肤品专场",
+                    price: 688,
+                    url: "http://c.vpimg1.com/upcb/2019/06/13/151/ias_156039645558979_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "科颜氏Kiehl's化妆品专场",
+                    price: 977,
+                    url: "http://c.vpimg1.com/upcb/2019/07/12/88/ias_156292408244680_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 887
+                }, {
+                    name: "Milli Millu女装-盛夏好货直降专场",
+                    price: 543,
+                    url: "https://c.vpimg1.com/upcb/2019/07/19/69/ias_156351435910137_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "珂尼蒂思CONATUS女装专场",
+                    price: 4365,
+                    url: "https://d.vpimg1.com/upcb/2019/07/11/138/ias_156283741123349_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "集美极美-精品女装特卖专场",
+                    price: 861,
+                    url: "https://c.vpimg1.com/upcb/2019/07/18/31/ias_156344451547647_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 772
+                },
+
+                {
+                    name: "卡柏迪CHICABOOTI女装好货直降专场",
+                    price: 997,
+                    url: "https://c.vpimg1.com/upcb/2019/07/03/9/ias_156212164093440_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 592
+                },
+
+                {
+                    name: "爱帝I'd男女内衣混合专场",
+                    price: 884,
+                    url: "https://c.vpimg1.com/upcb/2019/07/16/8/ias_156327118639331_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "千百怡恋女装-最后疯抢专场",
+                    price: 284,
+                    url: "https://c.vpimg1.com/upcb/2019/07/29/104/ias_156436558253793_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "韩彩HACAI家居服专场",
+                    price: 426,
+                    url: "https://d.vpimg1.com/upcb/2019/05/31/114/ias_155927842934050_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 398
+                },
+
+                {
+                    name: "花样女裤 穿搭攻略",
+                    price: 521,
+                    url: "https://c.vpimg1.com/upcb/2019/07/17/52/ias_156335234942993_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 246
+                },
+
+                {
+                    name: "卡柏迪CHICABOOTI女装好货直降专场",
+                    price: 997,
+                    url: "https://c.vpimg1.com/upcb/2019/07/03/9/ias_156212164093440_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 592
+                },
+
+                {
+                    name: "爱帝I'd男女内衣混合专场",
+                    price: 884,
+                    url: "https://c.vpimg1.com/upcb/2019/07/16/8/ias_156327118639331_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "音卓韩范女装 惊喜直降专场",
+                    price: 879,
+                    url: "https://d.vpimg1.com/upcb/2019/06/27/186/ias_156163501663969_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "音卓韩范女装 惊喜直降专场",
+                    price: 879,
+                    url: "https://d.vpimg1.com/upcb/2019/06/27/186/ias_156163501663969_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "Cendile皮草大衣超值闪购女装专场",
+                    price: 536,
+                    url: "https://c.vpimg1.com/upcb/2019/06/28/175/ias_156169057088584_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "新入驻-CC&DD女装专场",
+                    price: 736,
+                    url: "https://d.vpimg1.com/upcb/2019/07/29/139/ias_156439009714402_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 698
+                },
+
+                {
+                    name: "東品廊焕新女裤专场",
+                    price: 546,
+                    url: "https://d.vpimg1.com/upcb/2019/07/11/138/ias_156281462063927_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 366
+                },
+
+                {
+                    name: "THE NEXT甜美少女初秋尚新专场",
+                    price: 843,
+                    url: "https://c.vpimg1.com/upcb/2019/07/17/14/ias_156335391912134_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "千百怡恋女装-最后疯抢专场",
+                    price: 284,
+                    url: "https://c.vpimg1.com/upcb/2019/07/29/104/ias_156436558253793_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "韩彩HACAI家居服专场",
+                    price: 426,
+                    url: "https://d.vpimg1.com/upcb/2019/05/31/114/ias_155927842934050_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 398
+                }, {
+                    name: "THE NEXT甜美少女初秋尚新专场",
+                    price: 843,
+                    url: "https://c.vpimg1.com/upcb/2019/07/17/14/ias_156335391912134_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "千百怡恋女装-最后疯抢专场",
+                    price: 284,
+                    url: "https://c.vpimg1.com/upcb/2019/07/29/104/ias_156436558253793_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                }, {
+                    name: "花样女裤 穿搭攻略",
+                    price: 521,
+                    url: "https://c.vpimg1.com/upcb/2019/07/17/52/ias_156335234942993_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 246
+                },
+
+                {
+                    name: "音卓韩范女装 惊喜直降专场",
+                    price: 879,
+                    url: "https://d.vpimg1.com/upcb/2019/06/27/186/ias_156163501663969_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "Cendile皮草大衣超值闪购女装专场",
+                    price: 536,
+                    url: "https://c.vpimg1.com/upcb/2019/06/28/175/ias_156169057088584_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "新入驻-CC&DD女装专场",
+                    price: 736,
+                    url: "https://d.vpimg1.com/upcb/2019/07/29/139/ias_156439009714402_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 698
+                }, {
+                    name: "卡柏迪CHICABOOTI女装好货直降专场",
+                    price: 997,
+                    url: "https://c.vpimg1.com/upcb/2019/07/03/9/ias_156212164093440_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 592
+                },
+
+                {
+                    name: "爱帝I'd男女内衣混合专场",
+                    price: 884,
+                    url: "https://c.vpimg1.com/upcb/2019/07/16/8/ias_156327118639331_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "音卓韩范女装 惊喜直降专场",
+                    price: 879,
+                    url: "https://d.vpimg1.com/upcb/2019/06/27/186/ias_156163501663969_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "美国LA MER海蓝之谜奢华护肤专场",
+                    price: 1988,
+                    url: "http://c.vpimg1.com/upcb/2019/03/19/57/ias_155297740486444_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 877
+                },
+
+                {
+                    name: "水之蔻Water come护肤品专场",
+                    price: 688,
+                    url: "http://c.vpimg1.com/upcb/2019/06/13/151/ias_156039645558979_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "科颜氏Kiehl's化妆品专场",
+                    price: 977,
+                    url: "http://c.vpimg1.com/upcb/2019/07/12/88/ias_156292408244680_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 887
+                }, {
+                    name: "Milli Millu女装-盛夏好货直降专场",
+                    price: 543,
+                    url: "https://c.vpimg1.com/upcb/2019/07/19/69/ias_156351435910137_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "珂尼蒂思CONATUS女装专场",
+                    price: 4365,
+                    url: "https://d.vpimg1.com/upcb/2019/07/11/138/ias_156283741123349_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "集美极美-精品女装特卖专场",
+                    price: 861,
+                    url: "https://c.vpimg1.com/upcb/2019/07/18/31/ias_156344451547647_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 772
+                },
+
+                {
+                    name: "卡柏迪CHICABOOTI女装好货直降专场",
+                    price: 997,
+                    url: "https://c.vpimg1.com/upcb/2019/07/03/9/ias_156212164093440_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 592
+                },
+
+                {
+                    name: "爱帝I'd男女内衣混合专场",
+                    price: 884,
+                    url: "https://c.vpimg1.com/upcb/2019/07/16/8/ias_156327118639331_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "音卓韩范女装 惊喜直降专场",
+                    price: 879,
+                    url: "https://d.vpimg1.com/upcb/2019/06/27/186/ias_156163501663969_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "Cendile皮草大衣超值闪购女装专场",
+                    price: 536,
+                    url: "https://c.vpimg1.com/upcb/2019/06/28/175/ias_156169057088584_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "新入驻-CC&DD女装专场",
+                    price: 736,
+                    url: "https://d.vpimg1.com/upcb/2019/07/29/139/ias_156439009714402_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 698
+                },
+
+                {
+                    name: "東品廊焕新女裤专场",
+                    price: 546,
+                    url: "https://d.vpimg1.com/upcb/2019/07/11/138/ias_156281462063927_570x273_90.jpg",
+                    vip: true,
+                    vipPirce: 366
+                },
+
+                {
+                    name: "THE NEXT甜美少女初秋尚新专场",
+                    price: 843,
+                    url: "https://c.vpimg1.com/upcb/2019/07/17/14/ias_156335391912134_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                },
+
+                {
+                    name: "千百怡恋女装-最后疯抢专场",
+                    price: 284,
+                    url: "https://c.vpimg1.com/upcb/2019/07/29/104/ias_156436558253793_570x273_90.jpg",
+                    vip: false,
+                    vipPirce: 0
+                }
+            ];
+
+            var inside = document.querySelector('.box-inside')
+                // 函数：创建一个item
+            function createItem(i) {
+                var boxItem = document.createElement('div');
+                boxItem.classList.add('box-item');
+                inside.appendChild(boxItem);
+
+                var boxItemPic = document.createElement('img');
+                boxItemPic.src = allProducts[i].url;
+                boxItemPic.classList.add('box-item-pic')
+                boxItem.appendChild(boxItemPic);
+
+                var boxItemPrece = document.createElement('span');
+                boxItemPrece.classList.add('box-item-price');
+                boxItemPrece.innerHTML = '&yen;' + allProducts[i].price;
+                boxItem.appendChild(boxItemPrece);
+
+                var boxItemText = document.createElement('span');
+                boxItemText.classList.add('box-item-text');
+                boxItemText.innerHTML = allProducts[i].name;
+                boxItem.appendChild(boxItemText);
+            }
+            console.log(allProducts);
+
+            // 初始加载20个item
+            var number = 0;
+            for (var i = 0; i < 20; i++) {
+                createItem(i)
+                number++;
+                console.log(number);
+            }
+            // 懒加载
+            var isRun = true;
+            document.onscroll = function() {
+                if (!isRun) {
+                    return;
+                }
+                isRun = false;
+                setTimeout(function() {
+                    isRun = true;
+                    // 
+                    // console.log(document.documentElement.scrollTop);
+                    // console.log(inside.clientHeight);
+                    // console.log(document.documentElement.clientHeight);
+                    // console.log(inside.clientHeight - document.documentElement.scrollTop, document.documentElement.clientHeight);
+
+                    // inside.clientHeight 大盒子宽度
+                    // document.documentElement.scrollTop 滚动条流动像素
+                    // document.documentElement.clientHeight 可视化窗口的高度
+                    // 当大盒子宽度 - 滚动条高度 < 可视化窗口的高度 +50 时 加载12个item
+                    if (inside.clientHeight - document.documentElement.scrollTop < innerHeight + 50) {
+                        // 每次到底加载12个item
+                        if (number + 12 > allProducts.length) {
+                            return;
+                        }
+                        for (let i = number; i < number + 12; i++) {
+                            createItem(i);
+                            console.log('已触底，加载第' + (i + 1) + '项数据');
+                            // console.log(number);
+
+                        }
+                        number += 12;
+                        console.log();
+                    }
+
+                }, 1000)
+            }
+        }
+    </script>
+</body>
+
+</html>
