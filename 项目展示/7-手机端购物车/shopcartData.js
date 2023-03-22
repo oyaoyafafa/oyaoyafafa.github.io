@@ -1,5 +1,6 @@
 //购物车数据
-var shopcartData = [{
+var shopcartData = [
+    {
         //商品数量
         count: 2,
         //创建购物车数据时间
@@ -25,7 +26,7 @@ var shopcartData = [{
         //购物车id
         sid: "_s1660700780912",
         //商品小图片
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/IMG_0392_02p.jpg",
+        small_img: "./image/IMG_0392_02p.jpg",
         //商品状态
         status: 0,
         //商品类型
@@ -50,7 +51,7 @@ var shopcartData = [{
         price: "17.00",
         rule: "冰/半糖",
         sid: "_s1660700787744",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/d001_small.png",
+        small_img: "./image/d001_small.png",
         status: 0,
         type: "fruit_tea",
         type_desc: "水果茶",
@@ -70,7 +71,7 @@ var shopcartData = [{
         price: "20.00",
         rule: "冰/默认奶油",
         sid: "_s1660700792199",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/h001_small.png",
+        small_img: "./image/h001_small.png",
         status: 0,
         type: "fruit_tea",
         type_desc: "水果茶",
@@ -84,13 +85,13 @@ var shopcartData = [{
         enname: "Chocolate Exfreezo",
         is_hot: 0,
         is_remove: 0,
-        large_img: "http://www.kangliuyong.com:10002/images/product_large/IMG_0387_02.jpg",
+        large_img: "./image/IMG_0387_02p.jpg",
         name: "巧克力瑞纳冰",
         pid: "rena_ice001",
         price: "28.00",
         rule: "无奶油",
         sid: "_s1660700799360",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/IMG_0387_02p.jpg",
+        small_img: "",
         status: 0,
         type: "rena_ice",
         type_desc: "瑞纳冰",
@@ -110,7 +111,7 @@ var shopcartData = [{
         price: "28.00",
         rule: "默认奶油",
         sid: "_s1660700805316",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/IMG_0388_02p.jpg",
+        small_img: "./image/IMG_0388_02p.jpg",
         status: 0,
         type: "rena_ice",
         type_desc: "瑞纳冰",
@@ -130,7 +131,7 @@ var shopcartData = [{
         price: "19.00",
         rule: "冰/0卡糖",
         sid: "_s1660700812706",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/e001_small.png",
+        small_img: "./image/e001_small.png",
         status: 0,
         type: "fruit_tea",
         type_desc: "水果茶",
@@ -150,7 +151,7 @@ var shopcartData = [{
         price: "22.00",
         rule: "热/单份糖",
         sid: "_s1660700819267",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/IMG_0380_02p.jpg",
+        small_img: "./image/IMG_0380_02p.jpg",
         status: 0,
         type: "coffee",
         type_desc: "咖啡",
@@ -170,7 +171,7 @@ var shopcartData = [{
         price: "28.00",
         rule: "热/全糖/无奶油",
         sid: "_s1660700830045",
-        small_img: "http://www.kangliuyong.com:10002/images/product_small/IMG_0382_02p.jpg",
+        small_img: "./image/IMG_0382_02p.jpg",
         status: 0,
         type: "coffee",
         type_desc: "咖啡",
