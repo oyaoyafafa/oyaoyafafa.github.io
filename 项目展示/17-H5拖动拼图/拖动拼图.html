@@ -43,7 +43,7 @@
                     item.attr('draggale', true);
                     item.attr('id', i * 3 + j + 1);
                     item[0].ondragstart = function(event) {
-                        event.dataTransfer.setData('text', event.target.getAttribute('id'))
+                        event.dataTransfer.setData('text', event.target.getAttribute('id'));
                     }
                     item[0].ondragover = function(event) {
                         event.preventDefault();

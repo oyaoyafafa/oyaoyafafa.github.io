@@ -136,13 +136,14 @@
 
 
             }
-            box.onmouseup = function() {
+            document.onmouseup = function() {
                 document.onmousemove = null;
                 // console.log(start.offsetLeft);
                 // console.log(cover.offsetLeft);
                 // 偏差值为滑块的10分之1
                 if (start.offsetLeft - cover.offsetLeft < coverWidth / 10 && cover.offsetLeft - start.offsetLeft < coverWidth / 10) {
-                    alert('匹配成功')
+                    alert('匹配成功');
+                    format(cover, start, block);
                 } else {
                     // 不成功匹配则初始化
                     format(cover, start, block);

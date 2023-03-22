@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #score {
+            margin-top: 44px;
+            margin-left: 50px;
+        }
+        
+        .box {
+            width: 400px;
+            height: 400px;
+            border: 1px solid blue;
+            margin-left: 50px;
+            margin-top: 50px;
+            /* 父相 */
+            position: relative;
+            /* 溢出隐藏 */
+            overflow: hidden;
+        }
+        
+        .box .game {
+            /* 子绝 */
+            position: absolute;
+            top: -100px;
+            left: 0;
+        }
+        
+        .box .game .row {
+            overflow: hidden;
+        }
+        
+        .box .game .row div {
+            width: 100px;
+            height: 100px;
+            box-sizing: border-box;
+            border: 1px solid gray;
+            float: left;
+        }
+        
+        .box .game .row .black {
+            background: black;
+        }
+        
+        .box .gemeover {
+            width: 160px;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            background-color: #ddd;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .box .gemeover>div {
+            height: 50px;
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 统计分数的文本框 -->
+    <input type="text" id="score" value="0" disabled="disabled" />
+
+    <!-- .box大盒子 -->
+    <div class="box">
+        <!-- .game游戏区域 -->
+        <div class="game">
+            <!-- .row行 -->
+            <!-- .black表示黑块 -->
+            <div class="row">
+                <div class="black"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div></div>
+                <div class="black"></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div></div>
+                <div></div>
+                <div class="black"></div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="black"></div>
+            </div>
+        </div>
+        <div class="gemeover">
+            <div class="highest-score">最高分数 </div>
+            <div class="now-score">本局分数 </div>
+            <div class="reset">点击重新开始</div>
+        </div>
+    </div>
+
+    <script>
+        // 面向对象的做法
+        // 面向对象就是把步骤放在对象中,让对象分别调用这些步骤
+        // 对象里面需要有属性有方法
+        // 初学者,如果刚开始不确定有什么属性,可以先把方法列出来,后面再加属性
+
+        // 游戏区域对象,定义一个游戏区域构造函数
+        function Game() {
+            // 定义属性
+            // 游戏区域的dom对象
+            this.gameDom = document.querySelector(".game");
+            // 游戏区域下落的速度
+            this.speed = 1;
+            // 分数
+            this.score = 0;
+            // 分数文本框
+            this.scoreInput = document.querySelector("#score");
+            // 定时标识符
+            this.timer = null;
+            // 定义一个属性,保存当前游戏的状态
+            this.isOver = false;
+            // 调用初始化方法
+            this.init();
+        }
+        // 初始化函数
+        Game.prototype.init = function() {
+                // 调用游戏区域下落的方法
+                this.moveDown();
+                // 调用游戏区域点击被点击的方法
+                this.handleClick();
+            }
+            // 使用构造函数的原型对象添加方法
+            // 游戏区域下落方法
+        Game.prototype.moveDown = function() {
+                // 缓存this
+                var that = this;
+                // 开启定时器
+                this.timer = window.setInterval(function() {
+                    // 游戏区域下移
+                    console.log(that.gameDom.offsetTop);
+                    that.gameDom.style.top = that.gameDom.offsetTop + that.speed + "px";
+                    if (that.gameDom.offsetTop >= 0) {
+                        // 游戏预期触底以后,最后一行是否点击过,未点击过,需要结束游戏
+                        that.isTouchBottom();
+                        // 调用生成添加一行的方法
+                        that.createRow();
+                        // 调用生成删除一行的方法
+                        that.removeRow();
+
+                    }
+                }, 20);
+            }
+            // 判断触底的时候,最后一行的黑块是否已经被点击过
+        Game.prototype.isTouchBottom = function() {
+                if (this.gameDom.lastElementChild.getAttribute("data-pass") === null) {
+                    // alert("游戏结束");
+                    this.gameover()
+                        // 清除定时器
+                    window.clearInterval(this.timer);
+                    // 改变游戏状态
+                    this.isOver = true;
+
+                }
+            }
+            // 在最前面添加一行的方法
+        Game.prototype.createRow = function() {
+                // 创建新的一行
+                var newRow = document.createElement("div");
+                // 设置行的类名
+                newRow.className = "row";
+                // 得到1~4之间的随机数
+                var randomNum = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+                // 创建4个列
+                for (var i = 1; i <= 4; i++) {
+                    // 创建列
+                    var newCol = document.createElement("div");
+                    if (i == randomNum) { // 判断i是否等于随机1~4之间的整数
+                        // 添加.black类名
+                        newCol.classList.add("black");
+                    }
+                    // 把列加到行中
+                    newRow.appendChild(newCol);
+                }
+                // 把新的一行加到游戏区域的最前面
+                this.gameDom.insertBefore(newRow, this.gameDom.firstElementChild);
+                // 设置top为-100px 实现无缝下落的感觉
+                this.gameDom.style.top = "-100px";
+            }
+            // 删除最后一行的方法
+        Game.prototype.removeRow = function() {
+            // 如果当前游戏区域中的总行数超过5,那么我删除最后一行
+            if (this.gameDom.children.length > 5) {
+                this.gameDom.lastElementChild.remove();
+            }
+        }
+
+        // 游戏区域点击被点击的方法
+        Game.prototype.handleClick = function() {
+            // 缓慢this
+            var that = this;
+            // 给game绑定点击事件
+            this.gameDom.onclick = function(e) {
+                e = e || window.event;
+                if (that.isOver) { // 如果游戏已经结束
+                    that.gameover()
+                        // alert("游戏已经结束,请刷新页面重新开始!");
+                } else { // 游戏正在运行中
+                    if (e.target.classList.contains("black")) { // 如果点击的是黑块
+                        // 删除类名
+                        e.target.classList.remove("black");
+                        // 分数加1
+                        that.score++;
+                        // 设置分数值
+                        that.scoreInput.value = that.score;
+                        // 给当前被点击黑块的父元素添加一个自定义属性
+                        e.target.parentNode.setAttribute("data-pass", "已经点击");
+                        // 每5分,加速一次
+                        if (that.score % 5 == 0) {
+                            that.speed++;
+                        }
+                    } else { // 如果点击的是白块
+                        // alert("游戏结束");
+                        that.gameover()
+                            // 清除定时器
+                        window.clearInterval(that.timer);
+                        // 改变游戏状态
+                        that.isOver = true;
+                    }
+                }
+            }
+        }
+
+
+        // 结算页面 
+        Game.prototype.gameover = function() {
+            var that = this;
+            var gameoverNode = document.querySelector('.gemeover');
+            var gameoverList = document.querySelectorAll('.gemeover>div');
+            var highestScore = localStorage.getItem('highestScore');
+            // 判断是否更新游戏最高分记录
+            highestScore = this.score > highestScore ? this.score : highestScore;
+            localStorage.setItem('highestScore', highestScore);
+            // 更新游戏结算界面的数据
+            gameoverList[0].innerHTML = '最高分数:' + highestScore;
+            gameoverList[1].innerHTML = '本局分数:' + this.score;
+            // 显示游戏结算界面
+            gameoverNode.style.display = 'block';
+            // 设置游戏重开按钮事件
+            gameoverList[2].onclick = function() {
+                window.location.reload();
+            }
+        }
+
+
+        // 通过new关键字实例化对象
+        new Game();
+    </script>
+</body>
+
+</html>

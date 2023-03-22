@@ -165,8 +165,8 @@
             var coverArray = [];
             $box.on({
                 click: function(e) {
-                    var coverPositionX = e.offsetX
-                    var coverPositionY = e.offsetY
+                    var coverPositionX = e.offsetX;
+                    var coverPositionY = e.offsetY;
 
                     coverPositionX = (e.offsetX <= itemWidth) ? itemWidth / 2 : (e.offsetX >= boxWidth - itemWidth) ? boxWidth - itemWidth / 2 : e.offsetX;
                     coverPositionY = (e.offsetY <= itemHeight) ? itemHeight / 2 : (e.offsetY >= boxHeight - itemHeight) ? boxHeight - itemHeight / 2 : e.offsetY;

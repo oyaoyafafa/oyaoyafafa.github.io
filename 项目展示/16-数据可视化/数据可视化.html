@@ -288,7 +288,8 @@
                     start: 0,
                     end: 100
                 }, ],
-                color: ['#5475f5', '#9feaa5', '#85daef', '#74e2ca', '#e6ac53', '#9fb5ea']
+                color: ['#5475f5', '#9feaa5', '#85daef', '#74e2ca', '#e6ac53', '#9fb5ea'],
+                text: 'none'
             },
 
             //配置属性
@@ -325,15 +326,19 @@
             tooltip: {
                 trigger: 'item',
                 textStyle: {
-                    color: '#73c0de',
+                    color: '#bdcde1',
                     fontSize: '10px'
                 }
             },
             legend: {
                 orient: 'vertical',
-                left: 'left'
+                left: 'left',
+                textStyle: {
+                    color: '#bdcde1'
+                }
             },
             series: [{
+
                 name: 'Access From',
                 type: 'pie',
                 radius: '50%',
@@ -403,6 +408,9 @@
                     lineStyle: {
                         color: '#bdcde1'
                     }
+                },
+                splitLine: {
+                    show: false
                 }
             }],
             series: [{
@@ -648,7 +656,13 @@
                 trigger: 'axis'
             },
             legend: {
-                data: ['出监', '入监']
+                data: ['出监', '入监'],
+                icon: 'rect',
+                itemWidth: 10,
+                itemHeight: 10,
+                textStyle: {
+                    color: "#bdcde1"
+                }
             },
             grid: {
                 left: '3%',
@@ -656,11 +670,7 @@
                 bottom: '3%',
                 containLabel: true
             },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
+
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
