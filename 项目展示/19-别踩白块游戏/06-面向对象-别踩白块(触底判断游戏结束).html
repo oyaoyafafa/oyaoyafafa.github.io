@@ -251,7 +251,7 @@
             var that = this;
             var gameoverNode = document.querySelector('.gemeover');
             var gameoverList = document.querySelectorAll('.gemeover>div');
-            var highestScore = localStorage.getItem('highestScore');
+            var highestScore = localStorage.getItem('highestScore') || 0;
             // 判断是否更新游戏最高分记录
             highestScore = this.score > highestScore ? this.score : highestScore;
             localStorage.setItem('highestScore', highestScore);
