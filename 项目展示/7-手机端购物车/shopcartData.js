@@ -91,7 +91,7 @@ var shopcartData = [
         price: "28.00",
         rule: "无奶油",
         sid: "_s1660700799360",
-        small_img: "",
+        small_img: "./image/IMG_0387_02p.jpg",
         status: 0,
         type: "rena_ice",
         type_desc: "瑞纳冰",
