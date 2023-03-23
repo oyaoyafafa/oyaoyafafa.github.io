@@ -156,11 +156,12 @@
                     that.gameDom.style.top = that.gameDom.offsetTop + that.speed + "px";
                     if (that.gameDom.offsetTop >= 0) {
                         // 游戏预期触底以后,最后一行是否点击过,未点击过,需要结束游戏
-                        that.isTouchBottom();
+                        
                         // 调用生成添加一行的方法
                         that.createRow();
                         // 调用生成删除一行的方法
                         that.removeRow();
+                        that.isTouchBottom();
 
                     }
                 }, 20);
@@ -231,7 +232,7 @@
                         e.target.parentNode.setAttribute("data-pass", "已经点击");
                         // 每5分,加速一次
                         if (that.score % 5 == 0) {
-                            that.speed++;
+                            that.speed +=0.5;
                         }
                     } else { // 如果点击的是白块
                         // alert("游戏结束");
@@ -268,6 +269,8 @@
 
 
         // 通过new关键字实例化对象
+       
+        
         new Game();
     </script>
 </body>
