@@ -19,7 +19,7 @@
         
         .pic {
             width: 100%;
-            height: 200px;
+            height: 250px;
             background-image: url(./放大镜测试图3.jpg);
             background-repeat: no-repeat;
             background-size: 100%;
@@ -29,14 +29,15 @@
         .line {
             width: 100%;
             height: 50px;
-            background-color: #ddd;
+            background-color: rgba(255, 255, 255, 0.2);
             position: relative;
+            top:-50px
         }
         
         .block {
             width: 50px;
             height: 50px;
-            background-color: skyblue;
+            background-color: rgba(255, 255, 255, 0.6);
             position: absolute;
             left: 0px;
         }
@@ -96,7 +97,8 @@
             function format(cover, start, block) {
                 // 随机空白块的定位
                 var right = Math.random() * (picWidth / 2 - coverWidth)
-                var top = Math.random() * (picHeight - coverHeight)
+                var top = Math.random() * (picHeight - coverHeight*2);
+                console.log(top);
                 cover.style.right = right + 'px'
                 cover.style.top = top + 'px'
 
